@@ -1,0 +1,16 @@
+To execute the realized activity, first of all, we have to execute the 'use_djangostack' file from djangostack folder and get into the project folder.
+Then, we execute the following commands:
+
+`python manage.py makemigrations`
+`python manage.py migrate`
+`python manage.py runserver`
+
+Then, we go to the browers and we can search for the following urls:
+
+http://localhost:8000/
+http://localhost:8000/home
+http://localhost:8000/accounts/login
+http://localhost:8000/accounts/register
+http://localhost:8000/admin
+
+Logging in as an admin, we can see the models that we've done and work with them.
