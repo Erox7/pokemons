@@ -1,0 +1,13 @@
+<html>
+<head>
+  <title>{{ Title }}</title>
+</head>
+<body>
+  {% if user.username %}
+    <p>Welcome {{ user.username }} to pokeapp(Not implemented yet)</p><br/>
+    <a href= "/accounts/logout">Log out </a>
+  {% else %}
+  <p>You are not logged in: <a href="/accounts/login">Login</a></p>
+    <!--<p>You dont have an account? <a href="/accounts/login">Register Here</a></p>-->
+  {% endif %}
+</body>
