@@ -5,6 +5,13 @@
 <body>
   {% if user.username %}
     <p>Welcome {{ user.username }} to pokeapp(Not implemented yet)</p><br/>
+    <ul>
+    {%	for	dish	in	restaurant.dishes.all	%}
+            <li><a href="{%	url	'myrestaurants:dish_detail'	restaurant.id	dish.id	%}">
+            {{	dish.name	}}</a></li>
+    {%	empty	%}<li>Sorry,	no	dishes	for	this	restaurant	yet.</li>
+    {%	endfor	%}
+  </ul>
     <a href= "/accounts/logout">Log out </a>
   {% else %}
     <p>Aren't you logged? <a href="/accounts/login">LogIn Here</a></p>

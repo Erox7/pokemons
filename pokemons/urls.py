@@ -23,4 +23,7 @@ urlpatterns = [
     url(r'^accounts/register/$', register),
     url(r'^home/$', home),
     url(r'^$', home),
+	#url(r'\^pokemons/(?P<pk>\\d+)/reviews/create/\$',
+		#		'pokemons.views.review',
+			#	name='review_create'),
 ]
