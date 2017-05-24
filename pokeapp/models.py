@@ -10,6 +10,7 @@ class Type(models.Model):
     InmuneTo = models.TextField(null = True)
 
 class Move(models.Model):
+    name = models.TextField(null = True)
     effect = models.TextField()
 
 class Hability(models.Model):
