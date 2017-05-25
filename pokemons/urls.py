@@ -15,7 +15,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
-from pokeapp.views import home, register
+from pokeapp.views import *
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/login/$', login, name='login'),
@@ -23,6 +24,7 @@ urlpatterns = [
     url(r'^accounts/register/$', register),
     url(r'^home/$', home),
     url(r'^$', home),
+    url(r'^pokemons/$',pokemonListView.as_view(), name = 'pokemon_list',),
 	#url(r'\^pokemons/(?P<pk>\\d+)/reviews/create/\$',
 		#		'pokemons.views.review',
 			#	name='review_create'),

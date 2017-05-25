@@ -4,13 +4,9 @@
 </head>
 <body>
   {% if user.username %}
-    <p>Welcome {{ user.username }} to pokeapp(Not implemented yet)</p><br/>
+    <p>Welcome {{ user.username }} to pokeapp</p><br/>
     <ul>
-    {%	for	dish	in	restaurant.dishes.all	%}
-            <li><a href="{%	url	'myrestaurants:dish_detail'	restaurant.id	dish.id	%}">
-            {{	dish.name	}}</a></li>
-    {%	empty	%}<li>Sorry,	no	dishes	for	this	restaurant	yet.</li>
-    {%	endfor	%}
+            <li><a href="/pokemons/"> Go to Pokemon List</a></li>
   </ul>
     <a href= "/accounts/logout">Log out </a>
   {% else %}

@@ -1,0 +1,14 @@
+{%load staticfiles%}
+<html>
+<title>Pokemons</title>
+<body>
+{ % block content % }
+
+    { % for pokemon in pokemon_list % }
+        <ul>{{ pokemon.name }}</ul>
+    { % empty % } <li>Sorry no pokemons created yet.</li>
+    { % endfor % }
+
+{ % endfor % }
+</body>
+</html>

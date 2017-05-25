@@ -5,6 +5,8 @@ from django.template import Context
 from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
+from django.views.generic import DetailView, ListView
+from models import *
 # Create your views here.
 class PokemonDetail(DetailView):
     model = Pokemon
@@ -15,7 +17,11 @@ class PokemonDetail(DetailView):
         context['RATING_CHOICES'] = PokemonReview.RATING_CHOICES
         return context
 
-        
+class pokemonListView(ListView):
+    model = Pokemon
+    context_object_name = 'pokemon_list'
+    template_name = 'pokemon_list.html'
+
 def home(request):
     template = get_template('home.html')
     variables = Context({
@@ -23,7 +29,6 @@ def home(request):
         'user' : request.user
     })
     page = template.render(variables)
-
     return HttpResponse(page)
 
 def register(request):
