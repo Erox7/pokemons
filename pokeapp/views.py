@@ -43,6 +43,20 @@ class pokemonListView(ListView):
     context_object_name = 'pokemon_list'
     template_name = 'pokemon_list.html'
 
+class ReviewDetail(DetailView):
+    model = PokemonReview
+    template_name = 'review_detail.html'
+
+class ReviewList(ListView):
+    model = PokemonReview
+    context_object_name = 'review_list'
+    template_name = 'review_list.html'
+
+class ReviewDelete(LoginRequiredMixin,CheckIsOwnerMixin,DeleteView):
+    model = PokemonReview
+    template_name = 'delete_review.html'
+    success_url = reverse_lazy('pokemon_list')
+
 class PokemonReviewCreate(LoginRequiredMixin, CreateView):
     model = PokemonReview
     template_name = 'form.html'

@@ -1,0 +1,11 @@
+<html>
+<body>
+  <ul>
+      {% for review in review_list %}
+          <li><a href ='/reviews/{{review.id}}/details'>{{review.pokemon.name}}</a></li>
+          <p>Created by {{review.user}}</p>
+      {% empty %} <p>Sorry no reviews created yet.</p>
+      {% endfor %}
+  </ul>
+</body>
+</html>

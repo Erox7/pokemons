@@ -7,8 +7,9 @@
     <p>Welcome {{ user.username }} to pokeapp</p><br/>
     <ul>
             <li><a href="/pokemons"> Go to Pokemon List</a></li>
+            <li><a href="/reviews"> Go to PokemonReview List</a></li>
   </ul>
-    <a href= "/accounts/logout">Log out </a>
+    <a href= "/accounts/logout?next=/pokemons">Log out </a>
   {% else %}
     <p>Aren't you logged? <a href="/accounts/login">LogIn Here</a></p>
     <p>You dont have an account? <a href="/accounts/register">Register Here</a></p>

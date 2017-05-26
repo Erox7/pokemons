@@ -16,14 +16,4 @@
   <li>Hability: {{ pokemon.HabilitySet.habs }} </li>
   <li>Type:  {{ pokemon.pokemontype.name }} </li>
 </h2>
-<h2>Reviews</h2>
-<ul>
-{%	for	review	in	pokemon.pokemonreview_set.all	%}
-        <li>
-                <p>{%	if	review.comment	%}{{	review.comment	}}{%	endif	%}</p>
-                <p>Created	by	{{	review.user	}}</p>
-        </li>
-{%	endfor	%}
-</ul>
-<a href ='/pokemons/{{pokemon.id}}/details/reviewcreate'>Add Review</a>
 {%	endblock	%}
