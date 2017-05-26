@@ -1,21 +1,41 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import Context
 from django.template.loader import get_template
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
 from models import *
-from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import login_required
+from forms import *
 # Create your views here.
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+
+class CheckIsOwnerMixin(object):
+    def get_object(self, *args, **kwargs):
+        obj = super(CheckIsOwnerMixin, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise PermissionDenied
+        return obj
+
+class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
+    template_name = 'form.html'
+
 class PokemonDetail(DetailView):
     model = Pokemon
     template_name = 'pokemon_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(PokemonDetail,self).get_context_data(**kwargs)
-        context['RATING_CHOICES'] = PokemonReview.RATING_CHOICES
         return context
 
 class pokemonListView(ListView):
@@ -23,10 +43,21 @@ class pokemonListView(ListView):
     context_object_name = 'pokemon_list'
     template_name = 'pokemon_list.html'
 
+class PokemonReviewCreate(LoginRequiredMixin, CreateView):
+    model = PokemonReview
+    template_name = 'form.html'
+    form_class = PokemonReviewForm
+    success_url = reverse_lazy('pokemon_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.pokemon = Pokemon.objects.get(id=self.kwargs['pk'])
+        return super(PokemonReviewCreate,self).form_valid(form)
+
 def home(request):
     template = get_template('home.html')
     variables = Context({
-        'Title' : 'Pokeapp',
+        'Title' : 'sPokeapp',
         'user' : request.user
     })
     page = template.render(variables)
@@ -45,15 +76,3 @@ def register(request):
     token['form'] = form
 
     return render_to_response('registration/htmlregister.html', token)
-
-def review(request,	pk):
-				pokemon	= get_object_or_404(Pokemon, pk=pk)
-				if PokemonReview.objects.filter(pokemon=pokemon,	user=request.user).exists():
-								PokemonReview.objects.get(pokemon=pokemon,	user=request.user).delete()
-				new_review	= PokemonReview(
-								rating=request.POST['rating'],
-								ReviewText=request.POST['comment'],
-								user=request.user,
-								pokemon=pokemon)
-				new_review.save()
-				return HttpResponseRedirect(reverse('pokemon_detail',	args=(pokemon.id,)))

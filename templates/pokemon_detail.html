@@ -13,33 +13,17 @@
   <li>Evolves To:  {{pokemon.evolves_to}} </li>
 </h2>
 <h2>Type and hability</h2>
-  <li>Hability: {{ pokemon.HabilitySet }} </li>
-  <li>Type:  {{ pokemon.Type }} </li>
+  <li>Hability: {{ pokemon.HabilitySet.habs }} </li>
+  <li>Type:  {{ pokemon.pokemontype.name }} </li>
 </h2>
 <h2>Reviews</h2>
 <ul>
 {%	for	review	in	pokemon.pokemonreview_set.all	%}
         <li>
-                <p>{{	review.rating	}}	star{{	review.rating|pluralize	}}</p>
                 <p>{%	if	review.comment	%}{{	review.comment	}}{%	endif	%}</p>
-                <p>Created	by	{{	review.user	}}	on	{{	review.date	}}</p>
+                <p>Created	by	{{	review.user	}}</p>
         </li>
 {%	endfor	%}
 </ul>
-<h3>Add	Review</h3>
-<form action="{%	url	'review_create'	pokemon.id	%}" method="post">
-{%	csrf_token	%}
-Message:	<textarea name="ReviewText" id="ReviewText" rows="4"></textarea>
-<p>Rating:</p>
-<p>
-        {%	for	rate	in	RATING_CHOICES	%}
-                <input type="radio" name="rating" id="rating{{	forloop.counter	}}" value="{{
-rate.0	}}" />
-                <label for="choice{{	forloop.counter	}}">{{	rate.1	}}	star{{rate.0|pluralize
-}}</label>
-                <br/>
-        {%	endfor	%}
-</p>
-<input type="submit" value="Review" />
-</form>
+<a href ='/pokemons/{{pokemon.id}}/details/reviewcreate'>Add Review</a>
 {%	endblock	%}
