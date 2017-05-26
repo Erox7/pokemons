@@ -12,6 +12,12 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from forms import *
+from serializers import *
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework import permissions, generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 # Create your views here.
 
 class LoginRequiredMixin(object):
@@ -43,6 +49,17 @@ class pokemonListView(ListView):
     context_object_name = 'pokemon_list'
     template_name = 'pokemon_list.html'
 
+class PokemonReviewCreate(LoginRequiredMixin,CreateView):
+    model = PokemonReview
+    template_name = 'form.html'
+    form_class = PokemonReviewForm
+    success_url = reverse_lazy('review_list')
+
+    def form_valid(self,form):
+        form.instance.user = self.request.user
+        form.instance.pokemon = Pokemon.objects.get(id=self.kwargs['pk'])
+        return super(PokemonReviewCreate, self).form_valid(form)
+
 class ReviewDetail(DetailView):
     model = PokemonReview
     template_name = 'review_detail.html'
@@ -71,7 +88,7 @@ class PokemonReviewCreate(LoginRequiredMixin, CreateView):
 def home(request):
     template = get_template('home.html')
     variables = Context({
-        'Title' : 'sPokeapp',
+        'Title' : 'Pokeapp',
         'user' : request.user
     })
     page = template.render(variables)
@@ -90,3 +107,39 @@ def register(request):
     token['form'] = form
 
     return render_to_response('registration/htmlregister.html', token)
+
+
+
+
+class IsOwnerOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
+
+    def has_object_permission(self, request, view, obj):
+
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return obj.user == request.user
+
+
+class APIPokemonList(generics.ListCreateAPIView):
+    model = Pokemon
+    queryset = Pokemon.objects.all()
+    serializer_class = PokemonSerializer
+
+
+class APIPokemonDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Pokemon
+    queryset = Pokemon.objects.all()
+    serializer_class = PokemonSerializer
+
+
+class APIPokemonReviewList(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    model = PokemonReview
+    queryset = PokemonReview.objects.all()
+    serializer_class = PokemonReviewSerializer
+
+class APIPokemonReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = PokemonReview
+    queryset = PokemonReview.objects.all()
+    serializer_class = PokemonReviewSerializer

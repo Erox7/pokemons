@@ -16,4 +16,6 @@
   <li>Hability: {{ pokemon.HabilitySet.habs }} </li>
   <li>Type:  {{ pokemon.pokemontype.name }} </li>
 </h2>
+<a href= "{%url 'review_create' pokemon.id%}">Add Review</a>
+
 {%	endblock	%}

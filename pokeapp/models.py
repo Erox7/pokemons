@@ -47,3 +47,4 @@ class PokemonReview(models.Model):
     ReviewText = models.TextField()
     user = models.ForeignKey(User, default=1)
     pokemon = models.ForeignKey(Pokemon)
+    userlocation = models.TextField(max_length = 100, null = True)

@@ -3,9 +3,8 @@
         <h2>Review: {{  pokemonreview.ReviewText }}</h2>
         <p> Created by: {{ pokemonreview.user }}</p>
         {% if user == pokemonreview.user%}
-          (<a href="">Edit Review</a>)
+          (<a href="{% url 'review_edit' pokemonreview.id%}">Edit Review</a>)
           (<a href="{% url 'review_delete' pokemonreview.id%}">Delete Review</a>)
-          <p> Modify review</p>
         {% endif %}
 
 {%endblock%}
