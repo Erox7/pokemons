@@ -4,18 +4,18 @@ from rest_framework.serializers import HyperlinkedModelSerializer
 from models import *
 
 
-class AlbumSerializer(HyperlinkedModelSerializer):
+class PokemonSerializer(HyperlinkedModelSerializer):
     uri = HyperlinkedIdentityField(view_name='pokemon-detail')
     pokemonreview_set = HyperlinkedRelatedField(many=True, read_only=True,
-                                                   view_name='pokemonview-detail')
+                                                   view_name='pokemonreview-detail')
 
 
     class Meta:
         model = Pokemon
-        fields = ('uri', 'name', 'type', 'description', 'pokemonreview_set')
+        fields = ('uri', 'name', 'description', 'pokemonreview_set')
 
 
-class AlbumReviewSerializer(HyperlinkedModelSerializer):
+class PokemonReviewSerializer(HyperlinkedModelSerializer):
     uri = HyperlinkedIdentityField(view_name='pokemonreview-detail')
     pokemon = HyperlinkedRelatedField(view_name='pokemon-detail', read_only=True)
     user = CharField(read_only=True)
