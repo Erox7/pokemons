@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.template.context_processors import csrf
 from django.views.generic import DetailView, ListView
 from models import *
+from django.shortcuts import get_object_or_404
 # Create your views here.
 class PokemonDetail(DetailView):
     model = Pokemon
@@ -46,7 +47,7 @@ def register(request):
     return render_to_response('registration/htmlregister.html', token)
 
 def review(request,	pk):
-				pokemon	= get_object_or_404(Pokemon,	pk=pk)
+				pokemon	= get_object_or_404(Pokemon, pk=pk)
 				if PokemonReview.objects.filter(pokemon=pokemon,	user=request.user).exists():
 								PokemonReview.objects.get(pokemon=pokemon,	user=request.user).delete()
 				new_review	= PokemonReview(

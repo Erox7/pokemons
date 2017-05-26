@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'^home/$', home),
     url(r'^$', home),
     url(r'^pokemons/$',pokemonListView.as_view(), name = 'pokemon_list',),
-	#url(r'\^pokemons/(?P<pk>\\d+)/reviews/create/\$',
-		#		'pokemons.views.review',
-			#	name='review_create'),
+    url(r'^pokemons/(?P<pk>\d+)/details',PokemonDetail.as_view(), name ='pokemon_detail'),
+    url(r'^pokemons/(?P<pk>\d+)/review/create/','pokeapp.views.review', name ='review_create'),
 ]

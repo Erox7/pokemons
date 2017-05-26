@@ -1,14 +1,10 @@
-{%load staticfiles%}
 <html>
-<title>Pokemons</title>
 <body>
-{ % block content % }
-
-    { % for pokemon in pokemon_list % }
-        <ul>{{ pokemon.name }}</ul>
-    { % empty % } <li>Sorry no pokemons created yet.</li>
-    { % endfor % }
-
-{ % endfor % }
+  <ul>
+      {% for pokemon in pokemon_list %}
+          <li><a href ='/pokemons/{{pokemon.id}}/details'>{{pokemon.name}}</a></li>
+      {% empty %} <p>Sorry no pokemons created yet.</p>
+      {% endfor %}
+  </ul>
 </body>
 </html>
