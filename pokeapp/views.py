@@ -55,7 +55,7 @@ class ReviewList(ListView):
 class ReviewDelete(LoginRequiredMixin,CheckIsOwnerMixin,DeleteView):
     model = PokemonReview
     template_name = 'delete_review.html'
-    success_url = reverse_lazy('pokemon_list')
+    success_url = reverse_lazy('review_list')
 
 class PokemonReviewCreate(LoginRequiredMixin, CreateView):
     model = PokemonReview

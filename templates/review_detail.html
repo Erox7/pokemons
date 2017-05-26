@@ -1,8 +1,11 @@
 {%	block	content	%}
-<h1>
-				<p>Review from: {{	PokemonReview.pokemon.name	}}</p>
-        {{  PokemonReview.pokemon.description  }}
-        <p> Created by: {{ PokemonReview.user }}</p>
-        <p> Delete review</p>
-</h1>
+<h1><p>Review from Pokemon: {{	pokemonreview.pokemon.name	}}</p></h1>
+        <h2>Review: {{  pokemonreview.ReviewText }}</h2>
+        <p> Created by: {{ pokemonreview.user }}</p>
+        {% if user == pokemonreview.user%}
+          (<a href="">Edit Review</a>)
+          (<a href="{% url 'review_delete' pokemonreview.id%}">Delete Review</a>)
+          <p> Modify review</p>
+        {% endif %}
+
 {%endblock%}

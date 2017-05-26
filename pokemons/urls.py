@@ -26,8 +26,8 @@ urlpatterns = [
     url(r'^$', home),
     url(r'^reviews/$',ReviewList.as_view(), name = 'review_list',),
     url(r'^reviews/(?P<pk>\d+)/details/$', ReviewDetail.as_view(), name ='review_detail'),
+    url(r'^reviews/(?P<pk>\d+)/delete/$', ReviewDelete.as_view(), name = 'review_delete'),
     url(r'^pokemons/$',pokemonListView.as_view(), name = 'pokemon_list',),
     url(r'^pokemons/(?P<pk>\d+)/details/reviewcreate/$', PokemonReviewCreate.as_view(), name ='review_create'),
     url(r'^pokemons/(?P<pk>\d+)/details/$',PokemonDetail.as_view(), name ='pokemon_detail'),
-    url(r'^pokemons/(?P<pkr>\d+)/details/(?P<pk>\d+)/reviewdelete$', ReviewDelete.as_view(), name ='review_delete'),
 ]
