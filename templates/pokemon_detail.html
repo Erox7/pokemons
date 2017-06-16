@@ -5,20 +5,28 @@
 				<span property="name">{{	pokemon.name	}}</span>
         <span property="description">{{  pokemon.description  }}</span>
 </h1>
-	</span>
 <h2>Stats:</h2>
 <p>
 				{{	pokemon.stats	}} <br/>
-
+</span>
 </p>
+
+   <span vocab="http://schema.org/" typeof="Thing">
 <h2>Evolutions</h2>
-  <li>Evolves From: {{pokemon.evolves_from}} </li>
-  <li>Evolves To:  {{pokemon.evolves_to}} </li>
+  <li>Evolves From: <span property="name">{{pokemon.evolves_from}}</span> </li>
+	</span>
+	   <span vocab="http://schema.org/" typeof="Thing">
+  <li>Evolves To: <span property="name"> {{pokemon.evolves_to}}</span> </li>
+	</span>
 </h2>
+</span>
+   <span vocab="http://schema.org/" typeof="GenderType">
 <h2>Type and hability</h2>
   <li>Hability: {{ pokemon.HabilitySet.habs }} </li>
-  <li>Type:  <span category="Class">{{ pokemon.pokemontype.name }}</span> </li>
+  <li>Type:  <span property="name">{{ pokemon.pokemontype.name }}</span> </li>
 </h2>
+
+	</span>
 <a href= "{%url 'review_create' pokemon.id%}">Add Review</a>
 </br><a href= "/pokemons">Return to pokemon list</a>
 </br><a href= "/">Return to homepage</a>

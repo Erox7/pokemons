@@ -1,12 +1,13 @@
 {%	block	content	%}
-<h1><p>Review from Pokemon: {{	pokemonreview.pokemon.name	}}</p></h1>
-        <h2>Review: {{  pokemonreview.ReviewText }}</h2>
-        <p> Created by: {{ pokemonreview.user }}</p>
+   <span vocab="http://schema.org/" typeof="Review">
+<h1><p>Review from Pokemon:<span property="itemReviewed"> {{	pokemonreview.pokemon.name	}}</span></p></h1>
+        <h2>Review:<span property="reviewBody"> {{  pokemonreview.ReviewText }}</span></h2>
+        <p> Created by: Review:<span property="author">{{ pokemonreview.user }}</span></p>
         {% if user == pokemonreview.user%}
           (<a href="{% url 'review_edit' pokemonreview.id%}">Edit Review</a>)
           (<a href="{% url 'review_delete' pokemonreview.id%}">Delete Review</a>)
         {% endif %}
-
+</span>
       </br><a href= "/reviews">Return to pokemon list</a>
         </br><a href= "/">Return to homepage</a>
 {%endblock%}
