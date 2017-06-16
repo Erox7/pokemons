@@ -1,8 +1,11 @@
 {%	block	content	%}
+
+   <span vocab="http://schema.org/" typeof="Thing">
 <h1>
-				{{	pokemon.name	}}
-        {{  pokemon.description  }}
+				<span property="name">{{	pokemon.name	}}</span>
+        <span property="description">{{  pokemon.description  }}</span>
 </h1>
+	</span>
 <h2>Stats:</h2>
 <p>
 				{{	pokemon.stats	}} <br/>
@@ -14,7 +17,7 @@
 </h2>
 <h2>Type and hability</h2>
   <li>Hability: {{ pokemon.HabilitySet.habs }} </li>
-  <li>Type:  {{ pokemon.pokemontype.name }} </li>
+  <li>Type:  <span category="Class">{{ pokemon.pokemontype.name }}</span> </li>
 </h2>
 <a href= "{%url 'review_create' pokemon.id%}">Add Review</a>
 </br><a href= "/pokemons">Return to pokemon list</a>
